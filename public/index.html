@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script src="bundle.js"></script>
+<script>
+    // plugin startup shim
+    var _pluginModule = require('pluginmain');
+    
+    // Global reference to the current sheet;
+    var _plugin = null;
+
+    // Well-known entry point, called by hosting infrastructure
+    function PluginMain(sheetRef) {        
+        _plugin = _pluginModule.MyPlugin.BrowserEntry(sheetRef);
+    }
+</script>
+<script src="https://trcanvasdata.blob.core.windows.net/code2/plugin.js"></script>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Basic TRC plugin</title>
+</head>
+<body>
+    <p>
+        This is an empty TRC plugin that demonstrates calling PluginMain().
+    </p>
+
+    <h2>Basic sheet information:</h2>
+    <table>
+        <tr><td>Name:</td><td><div id="SheetName"></div></td></tr>
+        <tr><td>Parent:</td><td><div id="ParentSheetName"></div></td></tr>
+        <tr><td>Version:</td><td><div id="SheetVer"></div></td></tr>
+        <tr><td>Total Rows:</td><td><div id="RowCount"></div></td></tr>
+        <tr><td>Last refreshed:</td><td><div id="LastRefreshed"></div></td></tr>
+    </table>      
+
+    <button onclick="_plugin.onClickRefresh()">Refresh!</button>
+
+    <p>Congratulations! You made your first TRC plugin!</p>
+</body>
+</html>
