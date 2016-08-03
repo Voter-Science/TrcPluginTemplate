@@ -1,19 +1,27 @@
 # TrcPluginTemplate
-A template  for creating an initial plugin for TRC, the Canvassing app at . 
+A template  for creating an initial plugin for TRC, the Canvassing app hosted by http://Voter-Science.com. 
 
 ## TRC Plugins
 TRC plugins are JScript/HTML that run in the client's browser and make direct calls to the TRC server. 
 
-## Usage
+See TrcLib wrappers and utility at: https://github.com/Voter-Science/TrcLibNpm
+These wrappers are written for TypeScript,  http://www.typescriptlang.org/ , a superset of JScript. 
 
+## Usage
 This plugin is a NPM package and uses NPM scripts for build, test, and debugging.  
 
-1. Clone/Fork/Copy this repository 
-2. Build the plugin. This will compile TypeScript to JScript, run browserify to produce a bundle, and deposit all runtime artifcats in the '/public' directory. 
+### One time setup:
+1. First install Node and NPM from: https://nodejs.org/en/download/ 
+2. Clone/Fork/Copy this repository to a root directory.
+3. In the root directory, run ```npm install``` to pull down packages. Packages include the TypeScript compiler, testing framework, core TRC wrappers, etc. This will download them to a 'node_modules' folder. 
+
+### Ongoing development
+4. Build the plugin. This will compile TypeScript to JScript, run browserify to produce a bundle, and deposit all runtime artifcats in the '/public' directory. 
 ```npm run build```
-3. Run tests:  ```npm test```
-4. Debug locally: ```npm start```
+5. Run tests:  ```npm test```
+6. Debug locally: ```npm start```
 And then open a browser window with the URL printed out by that command. 
+
 
 To get the latest version of TrcLib from NPM, 
 ```npm upgrade trclib```
@@ -24,7 +32,7 @@ To get the latest version of TrcLib from NPM,
 2. Provides TypeScript compilation 
 3. Wires up Browserify so that you can write your plugin as a CommonJs module. 
 4. Includes a pattern for testing the plugin using Mocha and Chai
-5. PRovides a local debugging experience via Express. 
+5. Provides a local debugging experience via Express. 
 
 
 
