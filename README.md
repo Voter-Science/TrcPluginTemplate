@@ -17,7 +17,7 @@ This plugin is a NPM package and uses NPM scripts for build, test, and debugging
 3. In the root directory, run ```npm install``` to pull down packages. Packages include the TypeScript compiler, testing framework, core TRC wrappers, etc. This will download them to a 'node_modules' folder. 
 
 ### Ongoing development
-4. Build the plugin. This will compile TypeScript to JScript, run browserify to produce a bundle, and deposit all runtime artifcats in the '/public' directory. 
+4. Build the plugin. This will compile TypeScript to JScript, run browserify to produce a bundle, and deposit all runtime artifacts in the _'/public' directory_. That directory is the actual plugin that gets published. 
 ```npm run build```
 5. Run tests:  ```npm test```
 6. Debug locally: ```npm start```
@@ -33,7 +33,7 @@ To get the latest version of TrcLib from NPM,
 2. Provides TypeScript compilation 
 3. Wires up Browserify so that you can write your plugin as a CommonJs module. 
 4. Includes a pattern for testing the plugin using Mocha and Chai
-5. Provides a local debugging experience via Express. 
+5. Provides a local debugging experience via Express and https://github.com/Voter-Science/trc.runplugin. 
 
 
 
