@@ -4,8 +4,9 @@ A template  for creating an initial plugin for TRC, the Canvassing app hosted by
 ## TRC Plugins
 TRC plugins are JScript/HTML that run in the client's browser and make direct calls to the TRC server. 
 
-See TrcLib wrappers and utility at: https://github.com/Voter-Science/TrcLibNpm
-These wrappers are written for TypeScript,  http://www.typescriptlang.org/ , a superset of JScript. 
+1. See https://github.com/Voter-Science/TrcPluginTemplate/wiki for details on Plugins. 
+2. See TrcLib wrappers and utility at: https://github.com/Voter-Science/TrcLibNpm
+3. These wrappers are written for TypeScript, http://www.typescriptlang.org/ , a superset of JScript. This template pulls in the TypeScript compiler via NPM. 
 
 ## Usage
 This plugin is a NPM package and uses NPM scripts for build, test, and debugging.  
