@@ -14,14 +14,15 @@
     "chai": "^3.5.0",
     "express": "^4.14.0",
     "mocha": "^3.0.0",
+    "trc.runplugin": "^1.0.0",
     "typescript": "^1.8.10"
   },
   "scripts": {
-    "pretest": "tsc -p tests",
+    "pretest": "npm run prebuild && tsc -p tests",
     "test": "mocha tests",
     "prebuild": "tsc -p src",
     "build": "browserify -r ./src/pluginmain.js:pluginmain -o public/bundle.js",
-    "start" : "npm run build && node src/runlocal.js"
+    "start": "npm run build && node node_modules/trc.runplugin/index.js public"
   },
   "keywords": [
     "sample",

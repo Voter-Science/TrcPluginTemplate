@@ -1,7 +1,8 @@
 ﻿<!DOCTYPE html>
 
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="trcgrid.css">
 
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="bundle.js"></script>
 <script>
     // plugin startup shim
@@ -37,6 +38,9 @@
     </table>      
 
     <button onclick="_plugin.onClickRefresh()">Refresh!</button>
+
+    <button onclick="_plugin.onGetSheetContents()">GetSheetContents!</button>
+    <div id="contents">
 
     <p>Congratulations! You made your first TRC plugin!</p>
 </body>

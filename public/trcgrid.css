@@ -1,0 +1,18 @@
+
+/* Styles used with TRC GridControl */
+
+/* Done! Server has acknowledged change. */ 
+.OkUpload {
+    background-color: #adffb6;
+}
+
+/* Cell is changed locally, but not yet acknowledeged by server */
+.PreUpload {
+    background-color: #ffdada;
+}
+
+/* Cell was changed by another user */
+.OtherUpload {
+    background-color: #c1f8ff;
+}
+
