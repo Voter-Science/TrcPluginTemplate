@@ -12,8 +12,14 @@
     var _plugin = null;
 
     // Well-known entry point, called by hosting infrastructure
-    function PluginMain(sheetRef) {        
-        _plugin = _pluginModule.MyPlugin.BrowserEntry(sheetRef);
+    function PluginMain(sheetRef, opts) {                
+        _pluginModule.MyPlugin.BrowserEntry(sheetRef, opts, function(plugin) {
+            _plugin = plugin;
+            // Called when finished loading to show main body
+            $("#prebody").hide();  
+            $("#main2").show();
+
+        });
     }
 </script>
 <script src="https://trcanvasdata.blob.core.windows.net/code2/plugin.js"></script>
@@ -24,24 +30,30 @@
     <title>Basic TRC plugin</title>
 </head>
 <body>
-    <p>
-        This is an empty TRC plugin that demonstrates calling PluginMain().
-    </p>
+    <div id="prebody">
+        Loading...
+    </div>
+    <div id="main2"  style="display:none">
+        <p>
+            This is an empty TRC plugin that demonstrates calling PluginMain().
+        </p>
 
-    <h2>Basic sheet information:</h2>
-    <table>
-        <tr><td>Name:</td><td><div id="SheetName"></div></td></tr>
-        <tr><td>Parent:</td><td><div id="ParentSheetName"></div></td></tr>
-        <tr><td>Version:</td><td><div id="SheetVer"></div></td></tr>
-        <tr><td>Total Rows:</td><td><div id="RowCount"></div></td></tr>
-        <tr><td>Last refreshed:</td><td><div id="LastRefreshed"></div></td></tr>
-    </table>      
+        <h2>Basic sheet information:</h2>
+        <table>
+            <tr><td>Name:</td><td><div id="SheetName"></div></td></tr>
+            <tr><td>Parent:</td><td><div id="ParentSheetName"></div></td></tr>
+            <tr><td>Version:</td><td><div id="SheetVer"></div></td></tr>
+            <tr><td>Total Rows:</td><td><div id="RowCount"></div></td></tr>
+            <tr><td>Last refreshed:</td><td><div id="LastRefreshed"></div></td></tr>
+        </table>      
 
-    <button onclick="_plugin.onClickRefresh()">Refresh!</button>
+        <button onclick="_plugin.onClickRefresh()">Refresh!</button>
 
-    <button onclick="_plugin.onGetSheetContents()">GetSheetContents!</button>
-    <div id="contents">
+        <button onclick="_plugin.onGetSheetContents()">GetSheetContents!</button>
+        <div id="contents">
 
-    <p>Congratulations! You made your first TRC plugin!</p>
+        <p>Congratulations! You made your first TRC plugin!</p>
+        </div>
+    </div>
 </body>
 </html>

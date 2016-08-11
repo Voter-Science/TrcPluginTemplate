@@ -34,7 +34,7 @@ describe('sample test', function () {
 
     it('creates plugin instance', function () {
         var sheet: trc.Sheet = new mock.Sheet();
-        obj = new MyPluginX(sheet);
+        obj = new MyPluginX(sheet, null, null);
     });
     it('double value ', function () {
         assert.equal(10, obj.doubleit(5));

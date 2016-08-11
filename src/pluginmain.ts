@@ -12,21 +12,39 @@ declare var $: any; // external definition for JQuery
 export class MyPlugin {
     private _sheet: trc.Sheet;
     private _gps : gps.IGpsTracker;
+    private _options : trc.PluginOptionsHelper;
 
     // Entry point called from brower. 
-    public static BrowserEntry(sheet: trc.ISheetReference): MyPlugin {
-        var trcSheet = new trc.Sheet(sheet);        
-        return new MyPlugin(trcSheet);
+    // This creates real browser objects and passes in. 
+    public static BrowserEntry(
+        sheet: trc.ISheetReference, 
+        opts : trc.IPluginOptions, 
+        next : (plugin : MyPlugin) => void 
+    ) : void {
+        var trcSheet = new trc.Sheet(sheet);                
+        var opts2 = trc.PluginOptionsHelper.New(opts, trcSheet);
+
+        // Track GPS location of device
+        var gpsTracker = new gps.GpsTracker(); // Only works in browser
+        gpsTracker.start(null); // ignore callback
+
+        // Do any IO here...
+        
+        var plugin = new MyPlugin(trcSheet, opts2, gpsTracker);
+        next(plugin);
     }
 
-    public constructor(sheet: trc.Sheet) {
+    // Expose constructor directly for tests. They can pass in mock versions. 
+    public constructor(
+        sheet: trc.Sheet,
+        opts2 : trc.PluginOptionsHelper, 
+        gpsTracker : gps.IGpsTracker
+    ) {
         this.resetUi();
-        this._sheet = sheet; // Save for when we do Post
 
-        // Track GPS location of device                
-        var x = new gps.GpsTracker();
-        x.start(null);
-        this._gps = x;
+        this._sheet = sheet; // Save for when we do Post
+        this._options = opts2;               
+        this._gps = gpsTracker;
 
         this.refresh();
     }
