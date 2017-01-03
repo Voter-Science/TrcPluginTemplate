@@ -1,28 +1,41 @@
-// TypeScript
-// JScript functions for BasicList.Html. 
+// Sample 'Hello World' Plugin template.
+// Demonstrates:
+// - typescript
+// - using trc npm modules and browserify
+// - uses promises. 
+// - basic scaffolding for error reporting. 
 // This calls TRC APIs and binds to specific HTML elements from the page.  
 
-import * as trc from '../node_modules/trclib/trc2';
-import * as html from '../node_modules/trclib/trchtml';
-import * as gps from '../node_modules/trclib/gps';
-import * as trcFx from '../node_modules/trclib/trcfx'; 
+/// <reference path="../typings/modules/bluebird/index.d.ts" />
+
+import * as trc from 'trclib/trc2';
+import * as trcplugin from 'trclib/plugin';
+import * as trchtml from 'trclib/trchtml';
+import * as gps from 'trclib/gps';
+import * as trcFx from 'trclib/trcfx'; 
+
+import * as Promise from 'bluebird';
 
 declare var $: any; // external definition for JQuery 
+
+// Provide easy error handle for reporting errors from promises.  Usage:
+//   p.catch(showError);
+declare var showError : (error:any) => void; // error handler defined in index.html
 
 export class MyPlugin {
     private _sheet: trc.Sheet;
     private _gps : gps.IGpsTracker;
-    private _options : trc.PluginOptionsHelper;
+    private _options : trcplugin.PluginOptionsHelper;
 
-    // Entry point called from brower. 
-    // This creates real browser objects and passes in. 
-    public static BrowserEntry(
+    // Entry point called from browser. 
+    // This creates real browser objects and passes into the ctor. 
+    // Whereas a unit test would skip this and call the ctor directly. 
+    public static BrowserEntryAsync(
         sheet: trc.ISheetReference, 
-        opts : trc.IPluginOptions, 
-        next : (plugin : MyPlugin) => void 
-    ) : void {
+        opts : trcplugin.IPluginOptions
+    ) : Promise<MyPlugin> {
         var trcSheet = new trc.Sheet(sheet);                
-        var opts2 = trc.PluginOptionsHelper.New(opts, trcSheet);
+        var opts2 = trcplugin.PluginOptionsHelper.New(opts, trcSheet);
 
         // Track GPS location of device
         var gpsTracker = new gps.GpsTracker(); // Only works in browser
@@ -30,35 +43,35 @@ export class MyPlugin {
 
         // Do any IO here...
         
+        var throwError =false;
+
         var plugin = new MyPlugin(trcSheet, opts2, gpsTracker);
-        next(plugin);
+        return plugin.InitAsync().then( () => {
+            if (throwError) {
+                throw "some error";
+            }
+            return plugin;                        
+        });
     }
 
     // Expose constructor directly for tests. They can pass in mock versions. 
     public constructor(
         sheet: trc.Sheet,
-        opts2 : trc.PluginOptionsHelper, 
+        opts2 : trcplugin.PluginOptionsHelper, 
         gpsTracker : gps.IGpsTracker
     ) {
-        this.resetUi();
-
         this._sheet = sheet; // Save for when we do Post
         this._options = opts2;               
-        this._gps = gpsTracker;
-
-        this.refresh();
+        this._gps = gpsTracker;    
     }
+    
 
-    private refresh() {
-        this._sheet.getInfo(
-            (info) => {
-                this.updateInfo(info);
-            });
-    }
-
-    protected resetUi(): void {
-        // clear previous results
-        $('#main').empty();
+    // Make initial network calls to setup the plugin. 
+    // Need this as a separate call from the ctor since ctors aren't async. 
+    private InitAsync() : Promise<void> {
+        return this._sheet.getInfoAsync().then( info => {
+            this.updateInfo(info);
+        });     
     }
 
     // Display sheet info on HTML page
@@ -78,27 +91,23 @@ export class MyPlugin {
 
     // Demonstrate receiving UI handlers 
     public onClickRefresh(): void {
-        this.refresh();
+        this.InitAsync().        
+            catch(showError);
     }
-
-    // SheetControl will render HTML controls that need to callback to the sheet control.
-    // The js expression in html is "_plugin._control", which must be passed to the renderer.
-    public _control : html.SheetControl; // Expose so HTML handlers can invoke. 
 
     // downloading all contents and rendering them to HTML can take some time. 
     public onGetSheetContents(): void {
-        html.Loading("contents");
+        trchtml.Loading("contents");
         //$("#contents").empty();
         //$("#contents").text("Loading...");
 
         trcFx.SheetEx.InitAsync(this._sheet, this._gps, (sheetEx)=>
         {
-            this._sheet.getSheetContents((contents) => {
-                var render = new html.SheetControl("contents", sheetEx);
+            this._sheet.getSheetContentsAsync().then((contents) => {
+                var render = new trchtml.SheetControl("contents", sheetEx);
                 // could set other options on render() here
                 render.render();
-                this._control = render;
-            });
+            }).catch(showError);
         });        
     }
 }

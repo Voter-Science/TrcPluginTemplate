@@ -11,14 +11,30 @@
     // Global reference to the current sheet;
     var _plugin = null;
 
-    // Well-known entry point, called by hosting infrastructure
-    function PluginMain(sheetRef, opts) {                
-        _pluginModule.MyPlugin.BrowserEntry(sheetRef, opts, function(plugin) {
-            _plugin = plugin;
-            // Called when finished loading to show main body
-            $("#prebody").hide();  
-            $("#main2").show();
+    // Common error handler
+    function showError(error) {
+        $("#_errors").html("<pre style='color:red'>Error on load:" + error + "</pre>");
+        $("#_errorbtn").show();
+    }
+    function clearError() {
+        $("#_errors").empty();
+        $("#_errorbtn").hide();
+    }
 
+    // This is a well-known entry point. It's called by the hosting infrastructure.
+    function PluginMain(sheetRef, opts) {                
+
+        _pluginModule.MyPlugin.BrowserEntryAsync(sheetRef, opts).then(
+            function(plugin) {
+                // Success 
+                _plugin = plugin;            
+                $("#_loadingmsg").hide();  
+                $("#_mainbody").show(); // activate main controls
+            }
+        ).catch(function(error) {
+            // Error case. Display message and Keep main body hiden. 
+            $("#_loadingmsg").hide();  
+            showError(error);
         });
     }
 </script>
@@ -30,10 +46,15 @@
     <title>Basic TRC plugin</title>
 </head>
 <body>
-    <div id="prebody">
-        Loading...
+    <div id="_loadingmsg">
+        <img src="https://trcanvasdata.blob.core.windows.net/code2/loading.gif">
     </div>
-    <div id="main2"  style="display:none">
+    <span id="_errors">
+    </span>
+    <span id="_errorbtn" style="display:none">
+        <button onclick="clearError()">Clear error</button>
+    </span>
+    <div id="_mainbody"  style="display:none">
         <p>
             This is an empty TRC plugin that demonstrates calling PluginMain().
         </p>
