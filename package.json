@@ -23,6 +23,7 @@
     "pretest": "npm run prebuild && tsc -p tests",
     "test": "mocha tests",
     "prebuild": "tsc -p src",
+  "install": "typings install",
     "build": "browserify -r ./src/pluginmain.js:pluginmain -o public/bundle.js",
     "start": "npm run build && node node_modules/trc.runplugin/index.js public"
   },
