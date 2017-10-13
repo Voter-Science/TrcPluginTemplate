@@ -6,8 +6,6 @@
 // - basic scaffolding for error reporting. 
 // This calls TRC APIs and binds to specific HTML elements from the page.  
 
-/// <reference path="../typings/modules/bluebird/index.d.ts" />
-
 import * as trc from 'trclib/trc2';
 import * as trcplugin from 'trclib/plugin';
 import * as trchtml from 'trclib/trchtml';

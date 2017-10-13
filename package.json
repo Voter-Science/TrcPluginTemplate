@@ -7,8 +7,9 @@
     "test": "tests"
   },
   "dependencies": {
-    "bluebird": "^3.4.6",
-    "trclib": "^2.0.4"
+    "@types/bluebird": "^3.4.1",
+    "bluebird": "^3.4.1",
+    "trclib": "^3.0.0"
   },
   "devDependencies": {
     "browserify": "^13.1.0",
@@ -16,14 +17,16 @@
     "express": "^4.14.0",
     "mocha": "^3.0.0",
     "trc.runplugin": "^1.3.0",
-    "typescript": "^1.8.10",
-    "typings": "^1.5.0"
+    "typescript": "^2.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Voter-Science/TrcPluginTemplate.git"
   },
   "scripts": {
     "pretest": "npm run prebuild && tsc -p tests",
     "test": "mocha tests",
     "prebuild": "tsc -p src",
-  "install": "typings install",
     "build": "browserify -r ./src/pluginmain.js:pluginmain -o public/bundle.js",
     "start": "npm run build && node node_modules/trc.runplugin/index.js public"
   },
