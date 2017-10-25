@@ -12,8 +12,6 @@ import * as trchtml from 'trclib/trchtml';
 import * as gps from 'trclib/gps';
 import * as trcFx from 'trclib/trcfx'; 
 
-import * as Promise from 'bluebird';
-
 declare var $: any; // external definition for JQuery 
 
 // Provide easy error handle for reporting errors from promises.  Usage:
@@ -67,7 +65,7 @@ export class MyPlugin {
     // Make initial network calls to setup the plugin. 
     // Need this as a separate call from the ctor since ctors aren't async. 
     private InitAsync() : Promise<void> {
-        return this._sheet.getInfoAsync().then( info => {
+        return this._sheet.getInfoAsync().then( info  => {
             this.updateInfo(info);
         });     
     }
