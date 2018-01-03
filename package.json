@@ -1,13 +1,16 @@
 {
   "name": "trc.sampleplugin",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "sample plugin for trc",
   "main": "index.js",
   "directories": {
     "test": "tests"
   },
   "dependencies": {
-    "trclib": "^3.0.0"
+    "trc-httpshim": "^1.0.0",
+    "trc-core" : "^1.0.0",  
+    "trc-sheet" : "^1.0.0",
+    "trc-web" : "^1.0.0"
   },
   "devDependencies": {
     "browserify": "^13.1.0",
