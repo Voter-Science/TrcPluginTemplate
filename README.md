@@ -17,10 +17,9 @@ This plugin is a NPM package and uses NPM scripts for build, test, and debugging
 3. In the root directory, run ```npm install``` to pull down packages. Packages include the TypeScript compiler, testing framework, core TRC wrappers, etc. This will download them to a 'node_modules' folder. 
 
 ### Ongoing development
-4. Build the plugin. This will compile TypeScript to JScript, run browserify to produce a bundle, and deposit all runtime artifacts in the _'/public' directory_. That directory is the actual plugin that gets published. 
-```npm run build```
-5. Run tests:  ```npm test```
-6. Debug locally: ```npm start```
+4. Build the plugin. This will compile TypeScript to JScript, run browserify to produce a bundle, and deposit all runtime artifacts in the _'/public' directory_. That directory is the actual plugin that gets published. ```npm run build```
+5. Debug locally: ```npm start``` . This will actually spin up an NodeJS Express server that hosts the plugin at http://localhost. The host will actually follow the OAuth login flow to let yoiu sign in and select a sheet to use. 
+
 And then open a browser window with the URL printed out by that command. 
 
 
