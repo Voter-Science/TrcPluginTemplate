@@ -13,7 +13,12 @@
 
     // Common error handler
     function showError(error) {
-        $("#_errors").html("<pre style='color:red'>Error on load:" + error + "</pre>");
+        var msg = error.Message; // Commonly a user error. 
+        if (!msg) {
+            msg = error;
+        }
+
+        $("#_errors").html("<pre style='color:red'>Error on load:" + msg + "</pre>");
         $("#_errorbtn").show();
     }
     function clearError() {
