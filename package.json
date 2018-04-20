@@ -8,11 +8,12 @@
   },
   "dependencies": {
     "trc-httpshim": "^1.0.0",
-    "trc-core" : "^1.0.0",  
-    "trc-sheet" : "^1.0.0",
-    "trc-web" : "^1.0.0"
+    "trc-core": "^1.0.0",
+    "trc-sheet": "^1.2.0",
+    "trc-web": "^1.0.0"
   },
   "devDependencies": {
+    "@types/jquery": "^3.3.1",
     "browserify": "^13.1.0",
     "chai": "^3.5.0",
     "express": "^4.14.0",

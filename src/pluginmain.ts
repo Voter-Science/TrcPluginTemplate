@@ -19,7 +19,10 @@ import * as plugin from 'trc-web/plugin'
 import * as trchtml from 'trc-web/html'
 
 
-declare var $: any; // external definition for JQuery 
+// Installed via:
+//   npm install --save-dev @types/jquery
+// requires tsconfig: "allowSyntheticDefaultImports" : true 
+declare var $: JQueryStatic;
 
 // Provide easy error handle for reporting errors from promises.  Usage:
 //   p.catch(showError);
